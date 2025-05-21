@@ -14,9 +14,9 @@ import java.util.List;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class LogoutTest extends BaseTest{
+public   class LogoutTest extends BaseTest{
 
-    private WebElement waitForElement(By locator) {
+    private static WebElement waitForElement(By locator) {
         return new WebDriverWait(driver, Duration.ofSeconds(60))
                 .until(ExpectedConditions.presenceOfElementLocated(locator));
     }
@@ -31,7 +31,7 @@ public class LogoutTest extends BaseTest{
         System.out.println("👤 الحالة الحالية للمستخدم: " + userStatus);
         Assert.assertFalse(userStatus.contains("زائر"), "❌ ما زال المستخدم زائرًا، يبدو أن تسجيل الدخول لم ينجح.");
     }
-    private void verifyUserIsLoggedOut() {
+  private void verifyUserIsLoggedOut() {
         waitForElement(AppiumBy.accessibilityId("القائمة")).click();
 
         // التحقق من العنصر الذي يعرض "زائر"

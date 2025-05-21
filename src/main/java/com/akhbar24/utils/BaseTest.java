@@ -6,8 +6,8 @@ import io.appium.java_client.android.options.UiAutomator2Options;
 import io.qameta.allure.testng.AllureTestNg;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.AfterClass;
+import org.testng.ITestResult;
+import org.testng.annotations.*;
 
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -21,7 +21,6 @@ import java.time.Duration;
 
 import io.qameta.allure.Allure;
 import org.apache.commons.io.FileUtils;
-import org.testng.annotations.Listeners;
 
 @Listeners({AllureTestNg.class, TestListener.class})
 public class BaseTest {
@@ -29,7 +28,7 @@ public class BaseTest {
     public static AppiumDriver driver;
 
 
-    @BeforeClass
+    @BeforeMethod
     public void setUp() throws Exception {
         UiAutomator2Options options = new UiAutomator2Options();
         options.setPlatformName("Android");
@@ -39,49 +38,54 @@ public class BaseTest {
         options.setAppWaitDuration(Duration.ofSeconds(100));
         options.setCapability("chromedriverAutodownload", true);
 
-
         URL serverURL = new URL("http://127.0.0.1:4723/wd/hub");
 
         System.out.println("📱 جاري إنشاء الجلسة وفتح التطبيق...");
-
-        // إنشاء كائن AppiumDriver
-
-        driver = new AndroidDriver (serverURL, options);
+        driver = new AndroidDriver(serverURL, options);
         System.out.println("✅ تم فتح التطبيق!");
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(130));
-
-
     }
 
+    @AfterMethod
 
-    @AfterClass
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
-
-
-    public void takeScreenshot(String fileName) {
-        try {
-            File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-            File screenshotsDir = new File("screenshots");
-            if (!screenshotsDir.exists()) {
-                screenshotsDir.mkdir(); // إنشاء المجلد إذا مش موجود
+        public void tearDown(ITestResult result) {
+            if (result.getStatus() == ITestResult.FAILURE) {
+                takeScreenshot("FAILED_" + result.getName());
             }
 
-            File destFile = new File(screenshotsDir, fileName + ".png");
-            FileUtils.copyFile(srcFile, destFile);
-
-            // أضف للسحب في تقارير Allure
-            Allure.addAttachment(fileName, new FileInputStream(destFile));
-
-            System.out.println("📸 Screenshot saved: " + destFile.getAbsolutePath());
-        } catch (IOException e) {
-            System.err.println("⚠️ Error while taking screenshot: " + e.getMessage());
-        }
+            // بعد التقارير فقط نغلق الجلسة
+            if (driver != null) {
+                driver.quit();
+                System.out.println("🛑 تم إنهاء جلسة Appium بعد هذا الاختبار.");
+            }
     }
 
 
-}
+    public void takeScreenshot (String fileName){
+            try {
+                File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+                File screenshotsDir = new File("screenshots");
+                if (!screenshotsDir.exists()) {
+                    screenshotsDir.mkdir(); // إنشاء المجلد إذا مش موجود
+                }
+
+                File destFile = new File(screenshotsDir, fileName + ".png");
+                FileUtils.copyFile(srcFile, destFile);
+
+                // أضف للسحب في تقارير Allure
+                Allure.addAttachment(fileName, new FileInputStream(destFile));
+
+                System.out.println("📸 Screenshot saved: " + destFile.getAbsolutePath());
+            } catch (IOException e) {
+                System.err.println("⚠️ Error while taking screenshot: " + e.getMessage());
+            }
+        }
+
+
+
+
+
+    }
+
+
