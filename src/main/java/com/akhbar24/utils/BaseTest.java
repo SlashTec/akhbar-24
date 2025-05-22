@@ -38,7 +38,8 @@ public class BaseTest {
         options.setAppWaitDuration(Duration.ofSeconds(100));
         options.setCapability("chromedriverAutodownload", true);
 
-        URL serverURL = new URL("http://127.0.0.1:4723/wd/hub");
+        URL serverURL = new URL("https://6c79-82-212-126-176.ngrok-free.app/wd/hub");
+
 
         System.out.println("📱 جاري إنشاء الجلسة وفتح التطبيق...");
         driver = new AndroidDriver(serverURL, options);
