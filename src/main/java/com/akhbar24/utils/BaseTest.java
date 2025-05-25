@@ -38,12 +38,18 @@ public class BaseTest {
         options.setAppWaitDuration(Duration.ofSeconds(100));
         options.setCapability("chromedriverAutodownload", true);
 
-        URL url = new URL("http://f452-91-186-254-8.ngrok-free.app");
+        //URL url = new URL("http://f452-91-186-254-8.ngrok-free.app");
 
 
 
+
+       // driver = new AndroidDriver(serverURL, options);
+
+
+        String serverURL = "https://f452-91-186-254-8.ngrok-free.app";
         System.out.println("📱 جاري إنشاء الجلسة وفتح التطبيق...");
-        driver = new AndroidDriver(serverURL, options);
+        driver = new AndroidDriver(new URL(serverURL), options);
+
         System.out.println("✅ تم فتح التطبيق!");
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(130));
