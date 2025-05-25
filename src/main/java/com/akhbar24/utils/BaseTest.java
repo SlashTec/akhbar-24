@@ -38,7 +38,8 @@ public class BaseTest {
         options.setAppWaitDuration(Duration.ofSeconds(100));
         options.setCapability("chromedriverAutodownload", true);
 
-        URL serverURL = new URL("https://6c79-82-212-126-176.ngrok-free.app/wd/hub");
+        URL url = new URL("http://f452-91-186-254-8.ngrok-free.app");
+
 
 
         System.out.println("📱 جاري إنشاء الجلسة وفتح التطبيق...");
