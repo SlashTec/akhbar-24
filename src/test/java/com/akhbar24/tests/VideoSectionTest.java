@@ -80,7 +80,7 @@ public class VideoSectionTest extends BaseTest {
                 WebElement freshVideoIndicator = driver.findElement(videoIndicatorLocator);
                 Assert.assertTrue(freshVideoIndicator.isDisplayed(), "❌ الفيديو لم يظهر أو لم يبدأ التشغيل.");
             } catch (Exception e) {
-                takeScreenshot("video_playback_failure");
+               
                 Assert.fail("❌ حدث خطأ أثناء اختبار / المرئيلات _ الفيديو: " + e.getMessage());
             }
         }

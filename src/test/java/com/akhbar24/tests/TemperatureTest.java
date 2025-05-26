@@ -40,7 +40,7 @@ public class TemperatureTest extends BaseTest {
             System.out.println("✅ تم عرض درجة حرارة صحيحة في القائمة: " + content);
 
         } catch (Exception e) {
-            takeScreenshot("temperature_validation_failed");
+
             Assert.fail("❌ فشل في التحقق من درجة الحرارة: " + e.getMessage());
         }
     }

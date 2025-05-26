@@ -97,7 +97,7 @@ public class ContactUsTest extends BaseTest {
             System.out.println("✅ تم إرسال الرسالة بنجاح.");
 
         } catch (Exception e) {
-            takeScreenshot("contact_us_failure");
+
             Assert.fail("❌ فشل في إرسال نموذج الاتصال: " + e.getMessage());
         }
     }
