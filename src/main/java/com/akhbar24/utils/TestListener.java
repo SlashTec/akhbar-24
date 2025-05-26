@@ -1,8 +1,15 @@
 package com.akhbar24.utils;
 
+import io.qameta.allure.Allure;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+
+import java.io.File;
+import java.io.FileInputStream;
 
 
 public class TestListener implements ITestListener {
@@ -19,12 +26,17 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onTestFailure(ITestResult result) {
-        System.out.println("❌ Test Failed: " + result.getName());
-        Object currentClass = result.getInstance();
-        if (currentClass instanceof BaseTest) {
-            ((BaseTest) currentClass).takeScreenshot("FAILED_" + result.getName());
+        try {
+            File srcFile = ((TakesScreenshot) BaseTest.driver).getScreenshotAs(OutputType.FILE);
+            File dest = new File("screenshots/" + result.getName() + ".png");
+            FileUtils.copyFile(srcFile, dest);
+            Allure.addAttachment("Failure Screenshot", new FileInputStream(dest));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
+
+
 
     @Override
     public void onTestSkipped(ITestResult result) {

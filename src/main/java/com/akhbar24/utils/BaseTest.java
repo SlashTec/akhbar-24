@@ -45,16 +45,15 @@ public class BaseTest {
 
        // driver = new AndroidDriver(serverURL, options);
 
-
-        URL serverURL = new URL("https://3cce-91-186-254-8.ngrok-free.app/wd/hub");
+        String server = System.getProperty("serverURL");
+        URL serverURL = new URL(server);
 
         System.out.println("📱 جاري إنشاء الجلسة وفتح التطبيق...");
         driver = new AndroidDriver(serverURL, options);
-
-
         System.out.println("✅ تم فتح التطبيق!");
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(130));
+
     }
 
     @AfterMethod
