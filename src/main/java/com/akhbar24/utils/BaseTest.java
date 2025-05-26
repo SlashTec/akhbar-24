@@ -38,13 +38,7 @@ public class BaseTest {
         options.setAppWaitDuration(Duration.ofSeconds(100));
         options.setCapability("chromedriverAutodownload", true);
 
-        //URL url = new URL("http://f452-91-186-254-8.ngrok-free.app");
-
-
-
-
-       // driver = new AndroidDriver(serverURL, options);
-
+        
         String server = System.getProperty("serverURL");
         URL serverURL = new URL(server);
 
