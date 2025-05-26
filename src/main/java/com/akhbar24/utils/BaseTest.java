@@ -38,7 +38,8 @@ public class BaseTest {
         options.setAppWaitDuration(Duration.ofSeconds(100));
         options.setCapability("chromedriverAutodownload", true);
 
-        
+        /// /////////////////////////////////////////////
+
         String server = System.getProperty("serverURL");
         URL serverURL = new URL(server);
 
