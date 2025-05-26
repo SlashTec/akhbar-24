@@ -3,12 +3,12 @@ name: Trigger Jenkins Build
 on:
   push:
     branches:
-      - main 
+      - main
 
 jobs:
-  trigger:
+  trigger-jenkins:
     runs-on: ubuntu-latest
     steps:
-      - name: Call Jenkins Remote Build
+      - name: Trigger Jenkins Job
         run: |
-          curl -X POST "https://3cce-91-186-254-8.ngrok-free.app/view/QA-Test/job/akhbar_24_Android/build?token=123456"
+          curl -X POST "https://jenkins.login.srmg.com/view/QA-Test/job/akhbar_24_Android/build?token=123456"
