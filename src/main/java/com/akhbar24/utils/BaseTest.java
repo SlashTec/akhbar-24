@@ -17,7 +17,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.Date;
 
 import io.qameta.allure.Allure;
 import org.apache.commons.io.FileUtils;
@@ -52,44 +54,28 @@ public class BaseTest {
     }
 
     @AfterMethod
+    public void tearDown(ITestResult result) {
+        // فقط إذا فشل الاختبار
+       // if (result.getStatus() == ITestResult.FAILURE) {
+       //     takeScreenshot("FAILED_" + result.getName());
+       // }
 
-        public void tearDown(ITestResult result) {
-            if (result.getStatus() == ITestResult.FAILURE) {
-                takeScreenshot("FAILED_" + result.getName());
-            }
-
-            // بعد التقارير فقط نغلق الجلسة
-            if (driver != null) {
-                driver.quit();
-                System.out.println("🛑 تم إنهاء جلسة Appium بعد هذا الاختبار.");
-            }
-    }
-
-
-    public void takeScreenshot (String fileName){
-            try {
-                File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-                File screenshotsDir = new File("screenshots");
-                if (!screenshotsDir.exists()) {
-                    screenshotsDir.mkdir(); // إنشاء المجلد إذا مش موجود
-                }
-
-                File destFile = new File(screenshotsDir, fileName + ".png");
-                FileUtils.copyFile(srcFile, destFile);
-
-                // أضف للسحب في تقارير Allure
-                Allure.addAttachment(fileName, new FileInputStream(destFile));
-
-                System.out.println("📸 Screenshot saved: " + destFile.getAbsolutePath());
-            } catch (IOException e) {
-                System.err.println("⚠️ Error while taking screenshot: " + e.getMessage());
-            }
+        if (driver != null) {
+            driver.quit();
+            System.out.println("🛑 تم إنهاء جلسة Appium بعد هذا الاختبار.");
         }
-
-
-
-
-
     }
+
+
+
+
+
+
+
+
+
+
+
+}
 
 

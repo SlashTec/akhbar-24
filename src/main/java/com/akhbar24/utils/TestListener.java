@@ -10,6 +10,8 @@ import org.testng.ITestResult;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class TestListener implements ITestListener {
@@ -28,13 +30,25 @@ public class TestListener implements ITestListener {
     public void onTestFailure(ITestResult result) {
         try {
             File srcFile = ((TakesScreenshot) BaseTest.driver).getScreenshotAs(OutputType.FILE);
-            File dest = new File("screenshots/" + result.getName() + ".png");
-            FileUtils.copyFile(srcFile, dest);
-            Allure.addAttachment("Failure Screenshot", new FileInputStream(dest));
+
+            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            File screenshotsDir = new File("screenshots/" + timestamp);
+            if (!screenshotsDir.exists()) {
+                screenshotsDir.mkdirs();
+            }
+
+            File destFile = new File(screenshotsDir, "FAILED_" + result.getName() + ".png");
+            FileUtils.copyFile(srcFile, destFile);
+
+            Allure.addAttachment("❌ " + result.getName(), new FileInputStream(destFile));
+            System.out.println("📸 Screenshot saved at: " + destFile.getAbsolutePath());
+
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("⚠️ Error while taking screenshot: " + e.getMessage());
         }
     }
+
+
 
 
 

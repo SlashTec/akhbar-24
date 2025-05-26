@@ -5,7 +5,15 @@
     <test name="All Feature Tests">
         <classes>
             <class name="com.akhbar24.tests.LaunchAppTest"/>
-          
+            <class name="com.akhbar24.tests.LoginTest"/>
+            <class name="com.akhbar24.tests.LogoutTest"/>
+            <class name="com.akhbar24.tests.ContactUsTest"/>
+            <class name="com.akhbar24.tests.VideoSectionTest"/>
+            <class name="com.akhbar24.tests.OpenArticleTest"/>
+            <class name="com.akhbar24.tests.SearchTest"/>
+            <class name="com.akhbar24.tests.TemperatureTest"/>
+            <class name="com.akhbar24.tests.AddToFavoritesTest"/>
+
 
         </classes>
     </test>
