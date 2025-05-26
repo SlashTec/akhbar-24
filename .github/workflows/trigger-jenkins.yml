@@ -1,0 +1,14 @@
+name: Trigger Jenkins Build
+
+on:
+  push:
+    branches:
+      - main 
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Jenkins Remote Build
+        run: |
+          curl -X POST "https://3cce-91-186-254-8.ngrok-free.app/view/QA-Test/job/akhbar_24_Android/build?token=123456"
